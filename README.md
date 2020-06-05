@@ -1,2 +1,2 @@
 # dev-config
-My development configuration files, include dockfile and so on.
+My development configuration files, include dockerfile and so on.
