@@ -4,12 +4,12 @@ My development configuration files, include dockerfile, vim, zsh and so on.
 ## Dockerfile usage
 1. Download dockerfile.
     ``` bash
-    curl "https://github.com/dreamhomes/dev-config/blob/master/dockerfile/pytorch1.5-cuda10.1-cudnn7.dockerfile" -o pytorch1.5-cuda10.1-cudnn7.dockerfile
+    curl "https://raw.githubusercontent.com/dreamhomes/dev-config/master/dockerfile/pytorch1.5-cuda10.1-cudnn7.dockerfile" -o pytorch1.5-cuda10.1-cudnn7.dockerfile
     ```
 2. Build docker image.
     cd dockerfile folder:
     ```bash
-    docker build -t pytorch1.5-cuda10.1-cudnn7 -f pytorch1.5-cuda10.1-cudnn7.dockerfile
+    docker build -t pytorch1.5-cuda10.1-cudnn7 -f pytorch1.5-cuda10.1-cudnn7.dockerfile .
     ```
 
 3. Run image.
