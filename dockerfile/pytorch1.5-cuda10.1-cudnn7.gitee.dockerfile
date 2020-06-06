@@ -61,7 +61,7 @@ WORKDIR /home/${USERNAME}
 
 # 安装配置oh-my-zsh
 RUN sh -c "$(curl -fsSL https://gitee.com/dreamhomes/dev-config/raw/master/zsh/install.sh)" && \
-    curl "https://gitee.com/dreamhomes/dev-config/raw/master/zsh/themes/robbyrussell.zsh-theme-server" -o .oh-my-zsh/custom/themes/robbyrussell.zsh-theme && \
+    sed -n '/ZSH_THEME/p' .zshrc | sed 's/robbyrussell/agnoster/g' && \
     git clone https://github.com/zsh-users/zsh-autosuggestions .oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git .oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
     sed -i "s/^plugins=.*$/plugins=(git colorize cp copydir z zsh-autosuggestions zsh-syntax-highlighting)/" .zshrc
