@@ -14,5 +14,5 @@ My development configuration files, include dockerfile, vim, zsh and so on.
 
 3. Run image.
     ```bash
-    docker run -it --gpus all --name dreamhomes -p 8022:22 -u $(id -u):$(id -g) -v /home/dreamhomes:/home/dreamhomes pytorch1.5-cuda10.1-cudnn7
+    docker run -it --gpus all --name dreamhomes -h smj-docker -p 8022:22 -u $(id -u):$(id -g) -v /home/dreamhomes:/home/dreamhomes pytorch1.5-cuda10.1-cudnn7
     ```
