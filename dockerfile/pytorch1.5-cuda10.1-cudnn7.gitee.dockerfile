@@ -61,9 +61,9 @@ WORKDIR /home/${USERNAME}
 
 # 安装配置oh-my-zsh
 RUN sh -c "$(curl -fsSL https://gitee.com/dreamhomes/dev-config/raw/master/zsh/install.sh)" && \
-    sed -n "/ZSH_THEME/p" .zshrc | sed "s/robbyrussell/agnoster/g" && \
     git clone https://github.com/zsh-users/zsh-autosuggestions .oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git .oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
+    sed -i "s/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/" .zshrc && \
     sed -i "s/^plugins=.*$/plugins=(git colorize cp copydir z zsh-autosuggestions zsh-syntax-highlighting)/" .zshrc
 
 # 配置环境变量，使ssh连接时env也生效
