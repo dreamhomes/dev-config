@@ -69,8 +69,8 @@ RUN sh -c "$(curl -fsSL https://gitee.com/dreamhomes/dev-config/raw/master/zsh/i
 # 配置环境变量，使ssh连接时env也生效
 RUN sed -i '$a\export $(cat /proc/1/environ |tr "\\0" "\\n" | xargs)' .zshrc
 
-# 配置 spacevim
-RUN curl -sLf https://spacevim.org/cn/install.sh | bash
+# 配置vim
+RUN curl "https://gitee.com/dreamhomes/dev-config/raw/master/vim/vimrc" -o .vimrc
 
 
 EXPOSE 22
