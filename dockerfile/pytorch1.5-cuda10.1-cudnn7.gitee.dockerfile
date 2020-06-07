@@ -34,47 +34,34 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
          apt-transport-https && \
          rm -rf /var/lib/apt/lists/*
 
-# X11 transport(把/etc/ssh/sshd_config 中的X11Forwarding置为yes,X11UseLocalhost置为no)
-RUN sed -i "s/^.*X11Forwarding.*$/X11Forwarding yes/" /etc/ssh/sshd_config && \
-    sed -i "s/^.*X11UseLocalhost.*$/X11UseLocalhost no/" /etc/ssh/sshd_config
-
-# 新建用户并用 fixuid 管理 uid
+# add user and switch
 ENV USERNAME="dreamhomes"
 ENV PASSWD="home"
 RUN useradd --create-home --no-log-init --shell /bin/zsh ${USERNAME} && \
     adduser ${USERNAME} sudo && \
     echo "${USERNAME}:${PASSWD}" | chpasswd
-RUN USER=${USERNAME} && \
-    GROUP=${USERNAME} && \
-    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4.1/fixuid-0.4.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
-    chown root:root /usr/local/bin/fixuid && \
-    chmod 4755 /usr/local/bin/fixuid && \
-    mkdir -p /etc/fixuid && \
-    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
 
 USER ${USERNAME}:${USERNAME}
 
 WORKDIR /home/${USERNAME}
 
-# set the zsh theme
-ENV ZSH_THEME agnoster
-
 # 安装配置oh-my-zsh
 RUN sh -c "$(curl -fsSL https://gitee.com/dreamhomes/dev-config/raw/master/zsh/install.sh)" && \
     git clone https://github.com/zsh-users/zsh-autosuggestions .oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git .oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
+    sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster\"/" .zshrc && \
     sed -i "s/^plugins=.*$/plugins=(git colorize cp copydir z zsh-autosuggestions zsh-syntax-highlighting)/" .zshrc
 
-# 配置环境变量，使ssh连接时env也生效
+# env config using ssh
 RUN sed -i '$a\export $(cat /proc/1/environ |tr "\\0" "\\n" | xargs)' .zshrc
 
-# 配置vim
-RUN curl "https://gitee.com/dreamhomes/dev-config/raw/master/vim/vimrc" -o .vimrc
+# config spacevim
+RUN curl -sLf https://spacevim.org/cn/install.sh | bash
 
 
 EXPOSE 22
 
-ENTRYPOINT ["fixuid"]
+# init
 CMD echo ${PASSWD} | sudo -S service ssh start && /bin/zsh
 #CMD ["sh", "-c", "/usr/sbin/sshd && tail -f /dev/null"]
 
