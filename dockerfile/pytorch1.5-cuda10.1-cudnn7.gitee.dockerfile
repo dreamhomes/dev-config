@@ -14,8 +14,8 @@ RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list &
 ENV TERM=xterm-256color
 
 # complete ubuntu
-RUN export DEBIAN_FRONTEND=noninteractive && \
-    bash -c 'yes | unminimize'
+# RUN export DEBIAN_FRONTEND=noninteractive && \
+#     bash -c 'yes | unminimize'
 
 # apt install softwares
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -24,8 +24,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
          git \
          curl \
          ca-certificates \
-         libjpeg-dev \
-         libpng-dev \
          sudo \
          openssh-server \
          bash-completion \
@@ -33,7 +31,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
          vim-gnome \
          zsh \
          tmux \
-         proxychains4 \
          apt-transport-https && \
          rm -rf /var/lib/apt/lists/*
 
@@ -59,11 +56,13 @@ USER ${USERNAME}:${USERNAME}
 
 WORKDIR /home/${USERNAME}
 
+# set the zsh theme
+ENV ZSH_THEME agnoster
+
 # 安装配置oh-my-zsh
 RUN sh -c "$(curl -fsSL https://gitee.com/dreamhomes/dev-config/raw/master/zsh/install.sh)" && \
     git clone https://github.com/zsh-users/zsh-autosuggestions .oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git .oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
-    sed -i "s/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/" .zshrc && \
     sed -i "s/^plugins=.*$/plugins=(git colorize cp copydir z zsh-autosuggestions zsh-syntax-highlighting)/" .zshrc
 
 # 配置环境变量，使ssh连接时env也生效
