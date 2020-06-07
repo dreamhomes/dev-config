@@ -14,8 +14,8 @@ RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list &
 ENV TERM=xterm-256color
 
 # complete ubuntu
-# RUN export DEBIAN_FRONTEND=noninteractive && \
-#     bash -c 'yes | unminimize'
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    bash -c 'yes | unminimize'
 
 # apt install softwares
 RUN apt-get update && apt-get install -y --no-install-recommends \
