@@ -14,5 +14,9 @@ My development configuration files, include dockerfile, vim, zsh and so on.
 
 3. Run image.
     ```bash
-    docker run -it --gpus all --name dreamhomes -h smj-docker -p 8022:22 -u $(id -u):$(id -g) -v /home/dreamhomes:/home/dreamhomes pytorch1.5-cuda10.1-cudnn7
+    docker run -it --name dreamhomes -h smj-docker -p 8022:22 -v /home/dreamhomes:/home/dreamhomes pytorch1.5-cuda10.1-cudnn7
     ```
+    Keep container and exit: `ctrl+p+q` ;
+    Re-entry container: `docker attach dreamhomes`;
+
+Other source: [https://gitee.com/dreamhomes/dev-config](https://gitee.com/dreamhomes/dev-config)
