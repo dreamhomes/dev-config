@@ -26,7 +26,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
          ca-certificates \
          sudo \
          openssh-server \
-         bash-completion \
          vim \
          vim-gnome \
          zsh \
@@ -45,11 +44,11 @@ USER ${USERNAME}:${USERNAME}
 
 WORKDIR /home/${USERNAME}
 
-# 安装配置oh-my-zsh
+# install and config oh-my-zsh
 RUN sh -c "$(curl -fsSL https://gitee.com/dreamhomes/dev-config/raw/master/zsh/install.sh)" && \
+    curl "https://gitee.com/dreamhomes/dev-config/raw/master/zsh/themes/robbyrussell.zsh-theme-server" -o .oh-my-zsh/custom/themes/robbyrussell.zsh-theme && \
     git clone https://github.com/zsh-users/zsh-autosuggestions .oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git .oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
-    sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster\"/" .zshrc && \
     sed -i "s/^plugins=.*$/plugins=(git colorize cp copydir z zsh-autosuggestions zsh-syntax-highlighting)/" .zshrc
 
 # env config using ssh
