@@ -319,11 +319,12 @@ func SetTitle()
 " Python自动插入文件标题
  autocmd BufNewFile *py exec ":call SetPythonTitle()"
  func SetPythonTitle()
-  call setline(1,"# Copyright (c) dreamhomes All Rights Reserved.")
-  call append(line("."), "\# File Name: ".("%"))
-  call append(line(".")+1, "\# Author: dreamhomes")
-  call append(line(".")+2, "\# Description: ")
-  call append(line(".")+5, "\# Created Time: ".strftime("%Y-%m-%d",localtime()))
+  call setline(1,"# -*- coding: utf-8 -*-")
+  call append(line("."), "")
+  call append(line(".")+1, "\# @Time: ".strftime("%Y-%m-%d",localtime()))
+  call append(line(".")+2, "\# @File: ".("%"))
+  call append(line(".")+3, "\# @Author: dreamhomes")
+  call append(line(".")+4, "\# @Description: ")
  endfunc
 "新建文件后，自动定位到文件末尾
  autocmd BufNewFile * normal G o
