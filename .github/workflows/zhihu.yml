@@ -41,7 +41,7 @@ jobs:
 
       - name: Update zhihu
         run: |
-          cd scripts
+          cd scripts/zhihu/
           chmod +x ./zhihu.sh
           sh zhihu.sh
       

@@ -42,7 +42,7 @@ jobs:
 
       - name: Update hexo
         run: |
-          cd scripts
+          cd scripts/hexo/
           chmod +x ./hexo.sh
           sh hexo.sh
       
