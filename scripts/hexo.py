@@ -9,8 +9,14 @@ import datetime
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
-driver = webdriver.Chrome(executable_path="./chromedriver_linux")
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+
+driver = webdriver.Chrome(executable_path="./chromedriver_linux", options=chrome_options)
 date = datetime.datetime.now().strftime("%Y-%m-%d")
 # 不蒜子服务不生效则请求 50 次，超过 50 次不再访问
 MAX_COUNT = 50
