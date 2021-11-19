@@ -18,8 +18,8 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 
 driver = webdriver.Chrome(executable_path="./chromedriver_linux", options=chrome_options)
 date = datetime.datetime.now().strftime("%Y-%m-%d")
-# 不蒜子服务不生效则请求 50 次，超过 50 次不再访问
-MAX_COUNT = 50
+# 不蒜子服务不生效则请求 100 次，超过 100 次不再访问
+MAX_COUNT = 100
 count = 0
 
 while True:
